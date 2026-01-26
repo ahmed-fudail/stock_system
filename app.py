@@ -5,24 +5,41 @@ import sqlite3
 
 app = FastAPI()
 
-# هنا نقول لأمين المكتبة: ابحث عن قاعدة البيانات في مجلد اسمه data بجانبك
+# تصحيح المسار ليعمل داخل بيئة Railway (مجلد data المحمي بالـ Volume)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "data", "stock.db")
+# هذا المسار يضمن أن البرنامج يقرأ الملف بعد فك ضغطه داخل مجلد data
+DB_PATH = "/app/data/stock.db"
 
+# صفحة الواجهة الرئيسية
 @app.get("/")
 def home():
+    # التأكد من وجود ملف index.html في نفس المجلد
     return FileResponse("index.html")
 
+# دالة البحث الذكي
 @app.get("/search")
 def search(q: str):
-    q = q.strip().upper()
-    # نفتح الملف ونقرأ منه ثم نغلقه بأمان
-    with sqlite3.connect(DB_PATH) as conn:
-        cur = conn.cursor()
-        cur.execute("""
-            SELECT "Material No", "Material description", "Price", "Crcy", "Unit"
+    q = q.strip().upper()  # إزالة الفراغات وتحويل النص لأحرف كبيرة
+    
+    # استخدام with لضمان فتح وإغلاق قاعدة البيانات تلقائياً حتى لا يحدث تعليق للسيرفر
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cur = conn.cursor()
+            cur.execute("""
+            SELECT
+                "Material No",
+                "Material description",
+                "Price",
+                "Crcy",
+                "Unit"
             FROM items
-            WHERE CAST("Material No" AS TEXT) LIKE ? OR UPPER("Material description") LIKE ?
+            WHERE
+                CAST("Material No" AS TEXT) LIKE ?
+                OR UPPER("Material description") LIKE ?
             LIMIT 50
-        """, (f"%{q}%", f"%{q}%"))
-        return cur.fetchall()
+            """, (f"%{q}%", f"%{q}%"))
+            
+            rows = cur.fetchall()
+            return rows
+    except Exception as e:
+        return {"error": str(e)}
