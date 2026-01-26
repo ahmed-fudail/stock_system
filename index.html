@@ -1,78 +1,184 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<title>Stock Search</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #e0f7fa, #80deea);
-    padding: 20px;
-}
-h2 { text-align: center; color: #004d40; }
-input {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.25);
-    color: #004d40;
-}
-table {
-    width: 100%;
-    margin-top: 15px;
-    border-collapse: collapse;
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: 12px;
-}
-td, th {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-}
-th {
-    background: rgba(255, 255, 255, 0.4);
-}
-tr:nth-child(even) { background: rgba(255, 255, 255, 0.15); }
-</style>
+    <meta charset="utf-8">
+    <title>منظومة البحث عن المواد - شركة سرت</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --primary-color: #003366; 
+            --secondary-color: #f4f7f9;
+            --accent-color: #cc0000; 
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .logo {
+            max-width: 130px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin: 5px 0;
+            font-weight: 700;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            border-radius: 50px;
+            border: 2px solid #e0e0e0;
+            outline: none;
+            transition: 0.3s;
+            text-align: center;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(0,51,102,0.15);
+        }
+
+        .table-container {
+            margin-top: 25px;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            font-size: 15px;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        tr:nth-child(even) { background-color: #fafafa; }
+        tr:hover { background-color: #edf2f7; }
+
+        .btn-export {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
 </head>
 <body>
 
-<h2>منظومة البحث عن المواد</h2>
-<input type="text" id="q" placeholder="ابحث برقم المادة أو الوصف">
+<div class="container">
+    <div class="header">
+        <img src="image_d6ce3f.png" alt="شركة سرت" class="logo">
+        <h2>منظومة البحث عن المواد في نظام SAP</h2>
+        <p style="color: #555;">إدارة الإمداد والمخازن - شركة سرت</p>
+    </div>
 
-<table id="result"></table>
+    <div class="search-box">
+        <input type="text" id="q" placeholder="أدخل رقم المادة أو كلمة من الوصف للبحث..." autofocus>
+    </div>
+
+    <div id="export-area" style="display:none; text-align: left;">
+        <button class="btn-export" onclick="window.print()">طباعة النتائج</button>
+    </div>
+
+    <div class="table-container">
+        <table id="result"></table>
+    </div>
+</div>
 
 <script>
 const input = document.getElementById("q");
 const table = document.getElementById("result");
+const exportArea = document.getElementById("export-area");
 
 input.onkeyup = async () => {
     if (input.value.length < 2) {
         table.innerHTML = "";
+        exportArea.style.display = "none";
         return;
     }
 
-    const r = await fetch(`/search?q=${encodeURIComponent(input.value)}`);
-    const data = await r.json();
+    try {
+        const r = await fetch(`/search?q=${encodeURIComponent(input.value)}`);
+        const data = await r.json();
 
-    let html = `<tr>
-        <th>Material No</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Crcy</th>
-        <th>Unit</th>
-    </tr>`;
+        if (data.length === 0) {
+            table.innerHTML = "<tr><td style='text-align:center; padding:20px;'>لا توجد نتائج</td></tr>";
+            exportArea.style.display = "none";
+            return;
+        }
 
-    data.forEach(row => {
-        html += `<tr>${row.map(x => `<td>${x}</td>`).join("")}</tr>`;
-    });
+        exportArea.style.display = "block";
+        let html = `<thead><tr>
+            <th>رقم المادة</th>
+            <th>الوصف الفني</th>
+            <th>السعر التقريبي</th>
+            <th>العملة</th>
+            <th>الوحدة</th>
+        </tr></thead><tbody>`;
 
-    table.innerHTML = html;
+        data.forEach(row => {
+            html += `<tr>
+                <td><strong>${row[0]}</strong></td>
+                <td>${row[1]}</td>
+                <td style="font-weight:bold; color:#d32f2f;">${row[2]}</td>
+                <td>${row[3]}</td>
+                <td>${row[4]}</td>
+            </tr>`;
+        });
+        html += "</tbody>";
+        table.innerHTML = html;
+    } catch (e) {
+        console.error("خطأ في الاتصال");
+    }
 };
 </script>
 
