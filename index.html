@@ -11,104 +11,53 @@
     --accent:#1e88e5;
 }
 
+/* ================= BODY ================= */
 body{
     font-family:'Segoe UI',Tahoma;
-    background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
     margin:0;
     padding:20px;
+    color:#fff;
 }
 
+/* ================= CONTAINER ================= */
 .container{
     max-width:1100px;
     margin:auto;
-    background:#ffffff;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter: blur(8px);
     border-radius:28px;
-    padding:40px 30px 60px;
-    box-shadow:0 25px 45px rgba(0,0,0,.15);
+    padding:70px 30px 60px;
+    box-shadow:0 25px 45px rgba(0,0,0,.45);
     position:relative;
 }
 
-/* ================= HEADER ================= */
-.header{
-    text-align:center;
-    margin-bottom:35px;
-}
-
-.logo{
-    max-width:130px;
-    margin-bottom:15px;
-    filter:drop-shadow(0 3px 6px rgba(0,0,0,.2));
-}
-
-h2{
-    color:var(--primary);
-    font-weight:800;
-}
-
-.subtitle{
-    color:#6b7a90;
-    font-size:15px;
-    margin-top:6px;
-}
-
-/* ================= SEARCH ================= */
-.search-box{
-    margin-top:30px;
-}
-
-.search-box input{
-    width:100%;
-    padding:20px;
-    font-size:18px;
-    border-radius:60px;
-    border:2px solid #e2e8f0;
-    outline:none;
-    text-align:center;
-}
-
-.search-box input:focus{
-    border-color:var(--accent);
-    box-shadow:0 0 0 6px rgba(30,136,229,.18);
-}
-
-/* ================= DEV CARD (GLASS) ================= */
+/* ================= DEV CARD ================= */
 .dev-card{
     position:absolute;
-    top:22px;
-    left:22px;
+    top:20px;
+    left:20px;
 
-    background:linear-gradient(
-        135deg,
-        rgba(30,136,229,0.35),
-        rgba(0,51,102,0.35)
-    );
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-
-    border-radius:20px;
-    padding:14px 18px;
-    display:flex;
-    align-items:center;
-    gap:16px;
-
-    border:1px solid rgba(255,255,255,0.35);
-    box-shadow:0 18px 35px rgba(0,0,0,0.25);
-
-    color:#fff;
-    z-index:20;
-
-    transition:all .35s ease;
-}
-
-/* ===== HOVER EFFECT ===== */
-.dev-card:hover{
-    transform:translateY(-6px) scale(1.02);
-    box-shadow:0 28px 55px rgba(30,136,229,.45);
     background:linear-gradient(
         135deg,
         rgba(30,136,229,0.55),
         rgba(0,51,102,0.55)
     );
+    backdrop-filter: blur(14px);
+    border-radius:22px;
+    padding:14px 18px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    border:1px solid rgba(255,255,255,.35);
+    box-shadow:0 18px 35px rgba(0,0,0,.45);
+    transition:.35s ease;
+    z-index:10;
+}
+
+.dev-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 30px 55px rgba(30,136,229,.55);
 }
 
 .dev-info{
@@ -121,7 +70,6 @@ h2{
 .dev-info small{
     letter-spacing:2px;
     opacity:.85;
-    font-weight:600;
 }
 
 .dev-info strong{
@@ -136,52 +84,117 @@ h2{
     font-weight:600;
 }
 
-/* ICON */
 .dev-icon{
     width:44px;
     height:44px;
     border-radius:14px;
-    background:rgba(255,255,255,.18);
+    background:rgba(255,255,255,.2);
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:22px;
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
+}
+
+/* ================= HEADER ================= */
+.header{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.logo{
+    max-width:120px;
+    margin-bottom:15px;
+}
+
+h2{
+    margin:10px 0;
+    font-weight:800;
+}
+
+.subtitle{
+    opacity:.85;
+    font-size:14px;
+}
+
+/* ================= SEARCH ================= */
+.search-box{
+    margin-top:25px;
+}
+
+.search-box input{
+    width:100%;
+    padding:18px;
+    font-size:18px;
+    border-radius:50px;
+    border:none;
+    outline:none;
+    text-align:center;
 }
 
 /* ================= TABLE ================= */
 .table-container{
-    margin-top:45px;
-    overflow-x:auto;
-    border-radius:14px;
-    border:1px solid #eaeaea;
+    margin-top:35px;
+    border-radius:16px;
+    overflow:hidden;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
     direction:ltr;
+    background:#0b1f3a;
 }
 
 th{
-    background:var(--primary);
-    color:#fff;
-    padding:15px;
+    background:#001a3a;
+    padding:14px;
 }
 
 td{
-    padding:12px 15px;
-    border-bottom:1px solid #eee;
+    padding:12px;
+    border-bottom:1px solid rgba(255,255,255,.1);
 }
 
-tr:nth-child(even){background:#fafafa}
-tr:hover{background:#edf2f7}
+tr:hover{background:rgba(255,255,255,.05)}
+
+/* ================= MOBILE FIX ================= */
+@media (max-width: 768px){
+
+    .container{
+        padding:110px 18px 40px;
+    }
+
+    .dev-card{
+        left:50%;
+        transform:translateX(-50%);
+        top:18px;
+        width:90%;
+        justify-content:center;
+    }
+
+    .dev-card:hover{
+        transform:translateX(-50%);
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    .subtitle{
+        font-size:13px;
+    }
+
+    .search-box input{
+        font-size:16px;
+        padding:16px;
+    }
+}
 
 /* ================= PRINT ================= */
 @media print{
     .dev-card,.search-box{display:none}
-    body{background:#fff}
-    .container{box-shadow:none}
+    body{background:#fff;color:#000}
+    .container{box-shadow:none;background:#fff}
 }
 </style>
 </head>
@@ -190,7 +203,7 @@ tr:hover{background:#edf2f7}
 
 <div class="container">
 
-    <!-- ===== Glass Developer Card ===== -->
+    <!-- DEV CARD -->
     <div class="dev-card">
         <div class="dev-info">
             <small>DEVELOPED BY</small>
@@ -200,6 +213,7 @@ tr:hover{background:#edf2f7}
         <div class="dev-icon">👨‍💻</div>
     </div>
 
+    <!-- HEADER -->
     <div class="header">
         <img src="image_d6ce3f.png"
              onerror="this.src='https://raw.githubusercontent.com/ahmed-fudail/stock_system/main/image_d6ce3f.png'"
@@ -210,11 +224,12 @@ tr:hover{background:#edf2f7}
         </div>
     </div>
 
+    <!-- SEARCH -->
     <div class="search-box">
-        <input id="q" type="text"
-        placeholder="ابحث برقم المادة أو الوصف (Search by Material or Description)">
+        <input id="q" type="text" placeholder="ابحث برقم المادة أو الوصف">
     </div>
 
+    <!-- TABLE -->
     <div class="table-container">
         <table id="result"></table>
     </div>
@@ -228,15 +243,15 @@ const table=document.getElementById("result");
 q.onkeyup=async()=>{
  if(q.value.length<2){table.innerHTML="";return;}
  const r=await fetch(`/search?q=${encodeURIComponent(q.value)}`);
- const data=await r.json();
+ const d=await r.json();
  let h=`<thead><tr>
  <th>Material No</th><th>Description</th><th>Price</th>
  <th>Currency</th><th>Unit</th></tr></thead><tbody>`;
- data.forEach(x=>{
+ d.forEach(x=>{
  h+=`<tr>
  <td><b>${x[0]}</b></td>
  <td>${x[1]}</td>
- <td style="color:#d32f2f;font-weight:700">${x[2]}</td>
+ <td style="color:#ff6b6b">${x[2]}</td>
  <td>${x[3]}</td>
  <td>${x[4]}</td>
  </tr>`;
