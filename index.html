@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stock Search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #80deea);
+    padding: 20px;
+}
+h2 { text-align: center; color: #004d40; }
+input {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.25);
+    color: #004d40;
+}
+table {
+    width: 100%;
+    margin-top: 15px;
+    border-collapse: collapse;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+}
+td, th {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background: rgba(255, 255, 255, 0.4);
+}
+tr:nth-child(even) { background: rgba(255, 255, 255, 0.15); }
+</style>
+</head>
+<body>
+
+<h2>منظومة البحث عن المواد</h2>
+<input type="text" id="q" placeholder="ابحث برقم المادة أو الوصف">
+
+<table id="result"></table>
+
+<script>
+const input = document.getElementById("q");
+const table = document.getElementById("result");
+
+input.onkeyup = async () => {
+    if (input.value.length < 2) {
+        table.innerHTML = "";
+        return;
+    }
+
+    const r = await fetch(`/search?q=${encodeURIComponent(input.value)}`);
+    const data = await r.json();
+
+    let html = `<tr>
+        <th>Material No</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Crcy</th>
+        <th>Unit</th>
+    </tr>`;
+
+    data.forEach(row => {
+        html += `<tr>${row.map(x => `<td>${x}</td>`).join("")}</tr>`;
+    });
+
+    table.innerHTML = html;
+};
+</script>
+
+</body>
+</html>
