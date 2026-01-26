@@ -1,198 +1,250 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="utf-8">
-    <title>SAP Material Search - Sirt Oil</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        :root {
-            --primary-color: #003366; 
-            --secondary-color: #f4f7f9;
-            --accent-color: #28a745; 
-            --text-color: #333;
-        }
+<meta charset="utf-8">
+<title>SAP Material Search - Sirt Oil</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            margin: 0;
-            padding: 20px;
-            color: var(--text-color);
-            min-height: 100vh;
-        }
+<style>
+:root{
+    --primary:#003366;
+    --accent:#1e88e5;
+}
 
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-        }
+body{
+    font-family:'Segoe UI',Tahoma;
+    background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
+    margin:0;
+    padding:20px;
+}
 
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--secondary-color);
-        }
+.container{
+    max-width:1100px;
+    margin:auto;
+    background:#ffffff;
+    border-radius:28px;
+    padding:40px 30px 60px;
+    box-shadow:0 25px 45px rgba(0,0,0,.15);
+    position:relative;
+}
 
-        .logo {
-            max-width: 130px;
-            height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
-        }
+/* ================= HEADER ================= */
+.header{
+    text-align:center;
+    margin-bottom:35px;
+}
 
-        h2 {
-            color: var(--primary-color);
-            margin: 5px 0;
-            font-weight: 700;
-        }
+.logo{
+    max-width:130px;
+    margin-bottom:15px;
+    filter:drop-shadow(0 3px 6px rgba(0,0,0,.2));
+}
 
-        .search-box input {
-            width: 100%;
-            padding: 18px;
-            font-size: 18px;
-            border-radius: 50px;
-            border: 2px solid #e0e0e0;
-            outline: none;
-            transition: 0.3s;
-            text-align: center;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
-        }
+h2{
+    color:var(--primary);
+    font-weight:800;
+}
 
-        .search-box input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 15px rgba(0,51,102,0.15);
-        }
+.subtitle{
+    color:#6b7a90;
+    font-size:15px;
+    margin-top:6px;
+}
 
-        .table-container {
-            margin-top: 25px;
-            overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid #eee;
-        }
+/* ================= SEARCH ================= */
+.search-box{
+    margin-top:30px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            direction: ltr; /* جعل محتوى الجدول من اليسار لليمين لأنه إنجليزي */
-        }
+.search-box input{
+    width:100%;
+    padding:20px;
+    font-size:18px;
+    border-radius:60px;
+    border:2px solid #e2e8f0;
+    outline:none;
+    text-align:center;
+}
 
-        th {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 15px;
-            font-size: 14px;
-            text-align: left;
-        }
+.search-box input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 6px rgba(30,136,229,.18);
+}
 
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 13px;
-            text-align: left;
-        }
+/* ================= DEV CARD (GLASS) ================= */
+.dev-card{
+    position:absolute;
+    top:22px;
+    left:22px;
 
-        tr:nth-child(even) { background-color: #fafafa; }
-        tr:hover { background-color: #edf2f7; }
+    background:linear-gradient(
+        135deg,
+        rgba(30,136,229,0.35),
+        rgba(0,51,102,0.35)
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 
-        .btn-print {
-            display: inline-block;
-            margin-bottom: 10px;
-            padding: 10px 20px;
-            background: var(--accent-color);
-            color: white;
-            border-radius: 8px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    border-radius:20px;
+    padding:14px 18px;
+    display:flex;
+    align-items:center;
+    gap:16px;
 
-        .btn-print:hover { background: #218838; }
+    border:1px solid rgba(255,255,255,0.35);
+    box-shadow:0 18px 35px rgba(0,0,0,0.25);
 
-        @media print {
-            .search-box, .btn-print { display: none; }
-            body { background: white; padding: 0; }
-            .container { box-shadow: none; border: none; width: 100%; }
-        }
-    </style>
+    color:#fff;
+    z-index:20;
+
+    transition:all .35s ease;
+}
+
+/* ===== HOVER EFFECT ===== */
+.dev-card:hover{
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:0 28px 55px rgba(30,136,229,.45);
+    background:linear-gradient(
+        135deg,
+        rgba(30,136,229,0.55),
+        rgba(0,51,102,0.55)
+    );
+}
+
+.dev-info{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    font-size:13px;
+}
+
+.dev-info small{
+    letter-spacing:2px;
+    opacity:.85;
+    font-weight:600;
+}
+
+.dev-info strong{
+    font-size:16px;
+    font-weight:700;
+}
+
+.dev-phone{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-weight:600;
+}
+
+/* ICON */
+.dev-icon{
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    background:rgba(255,255,255,.18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
+}
+
+/* ================= TABLE ================= */
+.table-container{
+    margin-top:45px;
+    overflow-x:auto;
+    border-radius:14px;
+    border:1px solid #eaeaea;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    direction:ltr;
+}
+
+th{
+    background:var(--primary);
+    color:#fff;
+    padding:15px;
+}
+
+td{
+    padding:12px 15px;
+    border-bottom:1px solid #eee;
+}
+
+tr:nth-child(even){background:#fafafa}
+tr:hover{background:#edf2f7}
+
+/* ================= PRINT ================= */
+@media print{
+    .dev-card,.search-box{display:none}
+    body{background:#fff}
+    .container{box-shadow:none}
+}
+</style>
 </head>
+
 <body>
 
 <div class="container">
+
+    <!-- ===== Glass Developer Card ===== -->
+    <div class="dev-card">
+        <div class="dev-info">
+            <small>DEVELOPED BY</small>
+            <strong>AHMED.F</strong>
+            <div class="dev-phone">📞 22333</div>
+        </div>
+        <div class="dev-icon">👨‍💻</div>
+    </div>
+
     <div class="header">
-        <img src="image_d6ce3f.png" 
-             onerror="this.src='https://raw.githubusercontent.com/ahmed-fudail/stock_system/main/image_d6ce3f.png'" 
-             alt="Sirt Oil Co." 
+        <img src="image_d6ce3f.png"
+             onerror="this.src='https://raw.githubusercontent.com/ahmed-fudail/stock_system/main/image_d6ce3f.png'"
              class="logo">
         <h2>SAP Material Search System</h2>
+        <div class="subtitle">
+            نظام إدارة والبحث عن قطع الغيار – شركة سرت لإنتاج وتصنيع النفط والغاز
+        </div>
     </div>
 
     <div class="search-box">
-        <input type="text" id="q" placeholder="Search by Material No or Description..." autofocus>
-    </div>
-
-    <div id="controls" style="display:none; text-align: right; direction: ltr;">
-        <button class="btn-print" onclick="window.print()">Print Results</button>
+        <input id="q" type="text"
+        placeholder="ابحث برقم المادة أو الوصف (Search by Material or Description)">
     </div>
 
     <div class="table-container">
         <table id="result"></table>
     </div>
+
 </div>
 
 <script>
-const input = document.getElementById("q");
-const table = document.getElementById("result");
-const controls = document.getElementById("controls");
+const q=document.getElementById("q");
+const table=document.getElementById("result");
 
-input.onkeyup = async () => {
-    if (input.value.length < 2) {
-        table.innerHTML = "";
-        controls.style.display = "none";
-        return;
-    }
-
-    try {
-        const r = await fetch(`/search?q=${encodeURIComponent(input.value)}`);
-        const data = await r.json();
-
-        if (data.length === 0) {
-            table.innerHTML = "<tr><td style='text-align:center; padding:20px;'>No results found</td></tr>";
-            controls.style.display = "none";
-            return;
-        }
-
-        controls.style.display = "block";
-        let html = `<thead><tr>
-            <th>Material No</th>
-            <th>Material Description</th>
-            <th>Price</th>
-            <th>Currency</th>
-            <th>Unit</th>
-        </tr></thead><tbody>`;
-
-        data.forEach(row => {
-            html += `<tr>
-                <td><strong>${row[0]}</strong></td>
-                <td>${row[1]}</td>
-                <td style="font-weight:bold; color:#d32f2f;">${row[2]}</td>
-                <td>${row[3]}</td>
-                <td>${row[4]}</td>
-            </tr>`;
-        });
-        html += "</tbody>";
-        table.innerHTML = html;
-    } catch (e) {
-        console.error("Connection error");
-    }
-};
+q.onkeyup=async()=>{
+ if(q.value.length<2){table.innerHTML="";return;}
+ const r=await fetch(`/search?q=${encodeURIComponent(q.value)}`);
+ const data=await r.json();
+ let h=`<thead><tr>
+ <th>Material No</th><th>Description</th><th>Price</th>
+ <th>Currency</th><th>Unit</th></tr></thead><tbody>`;
+ data.forEach(x=>{
+ h+=`<tr>
+ <td><b>${x[0]}</b></td>
+ <td>${x[1]}</td>
+ <td style="color:#d32f2f;font-weight:700">${x[2]}</td>
+ <td>${x[3]}</td>
+ <td>${x[4]}</td>
+ </tr>`;
+ });
+ h+="</tbody>";
+ table.innerHTML=h;
+}
 </script>
 
 </body>
 </html>
-
