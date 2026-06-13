@@ -6,9 +6,9 @@ from fastapi.responses import FileResponse
 
 app = FastAPI()
 
-# المسارات داخل بيئة Railway
+# المسارات الديناميكية المتوافقة مع Render وأي بيئة تشغيل أخرى
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = "/app/data"
+DATA_DIR = os.path.join(BASE_DIR, "data") # تم التعديل هنا لإنشاء المجلد داخل المشروع
 DB_PATH = os.path.join(DATA_DIR, "stock.db")
 ZIP_PATH = os.path.join(BASE_DIR, "stock.zip")
 
