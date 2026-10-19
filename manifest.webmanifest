@@ -1,0 +1,9 @@
+{
+  "name": "SAP Material Search - Sirt Oil",
+  "short_name": "Material Search",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eef4f8",
+  "theme_color": "#0b2545",
+  "icons": [{"src":"/image_d6ce3f.png","sizes":"any","type":"image/png"}]
+}

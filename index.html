@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b2545">
+  <meta name="description" content="SAP material search for Sirt Oil">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/image_d6ce3f.png">
+  <title>SAP Material Search - Sirt Oil</title>
+  <style>
+    :root{--navy:#0b2545;--blue:#1468b3;--cyan:#1aa6b7;--bg:#eef4f8;--card:#fff;--text:#142536;--muted:#617487;--line:#d9e3ea;--danger:#b42318}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(145deg,#e8f1f6,#f8fafc);color:var(--text)}
+    .page{width:min(1120px,100%);margin:auto;padding:22px 16px 44px}
+    .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy),#123e67 60%,#0d7181);color:white;border-radius:22px;padding:26px;box-shadow:0 16px 42px rgba(11,37,69,.2)}
+    .hero:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06);left:-80px;top:-130px}
+    .brand{display:flex;align-items:center;gap:16px;position:relative;z-index:1}
+    .logo{width:76px;height:76px;object-fit:contain;background:white;border-radius:18px;padding:8px;box-shadow:0 8px 22px rgba(0,0,0,.17)}
+    h1{font-size:clamp(22px,4vw,34px);margin:0 0 7px;letter-spacing:.2px}
+    .subtitle{margin:0;color:#dcecf5;font-size:clamp(14px,2.3vw,17px);line-height:1.7}
+    .search-panel{position:relative;z-index:2;margin-top:22px;background:rgba(255,255,255,.98);padding:10px;border-radius:16px;display:flex;gap:8px;box-shadow:0 10px 28px rgba(0,0,0,.14)}
+    .search-panel input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:18px;padding:13px 14px;direction:auto}
+    .clear{border:0;border-radius:11px;background:#e9f0f5;color:var(--navy);font-size:22px;width:48px;cursor:pointer;display:none}
+    .meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 3px 10px;color:var(--muted);font-size:14px}
+    .status{min-height:22px}
+    .loader{display:none;width:19px;height:19px;border:3px solid #cfe0ec;border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .results{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 9px 30px rgba(26,57,83,.08)}
+    table{width:100%;border-collapse:collapse;direction:ltr}
+    th{background:#eaf3f8;color:var(--navy);text-align:left;padding:15px 18px;font-size:14px;position:sticky;top:0}
+    td{padding:15px 18px;border-top:1px solid var(--line);vertical-align:top;line-height:1.5}
+    tbody tr:hover{background:#f7fbfd}
+    td:first-child{font-weight:700;color:var(--blue);white-space:nowrap}
+    td:last-child{font-weight:700;color:#33556f;white-space:nowrap}
+    .empty{padding:35px 18px;text-align:center;color:var(--muted)}
+    .error{color:var(--danger)}
+    footer{text-align:center;color:var(--muted);font-size:12px;margin-top:18px;line-height:1.7}
+    @media(max-width:680px){
+      .page{padding:10px 10px 30px}.hero{border-radius:17px;padding:18px}.brand{align-items:flex-start}.logo{width:58px;height:58px;border-radius:14px}
+      .search-panel{margin-top:17px}.search-panel input{font-size:16px;padding:11px 9px}.meta{margin-top:14px}
+      .results{background:transparent;border:0;box-shadow:none;overflow:visible}
+      table,thead,tbody,tr,th,td{display:block} thead{display:none}
+      tbody{display:grid;gap:10px} tr{background:white;border:1px solid var(--line);border-radius:15px;padding:13px 14px;box-shadow:0 5px 18px rgba(26,57,83,.07);direction:ltr}
+      td{display:grid;grid-template-columns:92px 1fr;gap:9px;border:0;padding:7px 0;font-size:15px;overflow-wrap:anywhere}
+      td:before{content:attr(data-label);color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase}
+      td:nth-child(2){font-size:15px}.empty{background:white;border-radius:15px;border:1px solid var(--line)}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="brand">
+        <img class="logo" src="/image_d6ce3f.png" alt="Sirt Oil logo">
+        <div><h1>SAP Material Search</h1><p class="subtitle">نظام البحث السريع عن المواد وقطع الغيار</p></div>
+      </div>
+      <div class="search-panel">
+        <input id="q" type="search" autocomplete="off" enterkeyhint="search" placeholder="اكتب رقم المخزون أو الوصف..." aria-label="Search materials">
+        <button id="clear" class="clear" type="button" aria-label="Clear">×</button>
+      </div>
+    </section>
+
+    <div class="meta"><div id="status" class="status">ابدأ بكتابة حرفين على الأقل</div><div id="loader" class="loader" aria-label="Loading"></div></div>
+    <section class="results" aria-live="polite">
+      <table>
+        <thead><tr><th>Stock No.</th><th>Description</th><th>Unit</th></tr></thead>
+        <tbody id="body"><tr><td class="empty" colspan="3">نتائج البحث ستظهر هنا</td></tr></tbody>
+      </table>
+    </section>
+    <footer>DEVELOPED BY AHMED.F &nbsp;|&nbsp; Ext. 22333</footer>
+  </main>
+<script>
+const input=document.getElementById('q'), body=document.getElementById('body'), statusEl=document.getElementById('status'), loader=document.getElementById('loader'), clearBtn=document.getElementById('clear');
+let timer=null, controller=null;
+const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+function message(text, isError=false){body.innerHTML=`<tr><td class="empty ${isError?'error':''}" colspan="3">${esc(text)}</td></tr>`;}
+async function runSearch(){
+  const term=input.value.trim(); clearBtn.style.display=term?'block':'none';
+  if(term.length<2){if(controller)controller.abort();statusEl.textContent='ابدأ بكتابة حرفين على الأقل';message('نتائج البحث ستظهر هنا');loader.style.display='none';return;}
+  if(controller)controller.abort(); controller=new AbortController(); loader.style.display='block'; statusEl.textContent='جاري البحث...';
+  try{
+    const response=await fetch(`/search?q=${encodeURIComponent(term)}`,{signal:controller.signal});
+    const data=await response.json();
+    if(!response.ok||data.error)throw new Error(data.error||'Search failed');
+    statusEl.textContent=data.length?`${data.length} نتيجة`: 'لا توجد نتائج';
+    if(!data.length){message('لا توجد مواد مطابقة');return;}
+    body.innerHTML=data.map(x=>`<tr><td data-label="Stock No.">${esc(x[0])}</td><td data-label="Description">${esc(x[1])}</td><td data-label="Unit">${esc(x[2])}</td></tr>`).join('');
+  }catch(e){if(e.name!=='AbortError'){statusEl.textContent='تعذر إكمال البحث';message('حدث خطأ. حاول مرة أخرى.',true);}}
+  finally{if(controller&&!controller.signal.aborted)loader.style.display='none';}
+}
+input.addEventListener('input',()=>{clearTimeout(timer);timer=setTimeout(runSearch,350)});
+input.addEventListener('keydown',e=>{if(e.key==='Enter'){clearTimeout(timer);runSearch();}});
+clearBtn.addEventListener('click',()=>{input.value='';input.focus();runSearch();});
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
